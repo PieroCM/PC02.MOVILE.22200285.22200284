@@ -32,12 +32,15 @@ class RegisterViewModel(
         }
     }
 
-    fun onCountryChange(country: String) {
-        _uiState.update { it.copy(country = country, errorMessage = null) }
+    fun onTitulosGanadosChange(titulos: String) {
+        // Only allow digits
+        if (titulos.isEmpty() || titulos.all { it.isDigit() }) {
+            _uiState.update { it.copy(titulosGanados = titulos, errorMessage = null) }
+        }
     }
 
-    fun onStadiumChange(stadium: String) {
-        _uiState.update { it.copy(stadium = stadium, errorMessage = null) }
+    fun onImagenUrlChange(url: String) {
+        _uiState.update { it.copy(imagenUrl = url, errorMessage = null) }
     }
 
     /**
@@ -57,9 +60,9 @@ class RegisterViewModel(
             val equipo = Equipo(
                 id = "", // Firestore will generate the ID
                 nombreEquipo = _uiState.value.teamName,
-                anioFundacion = _uiState.value.foundedYear.toInt(),
-                titulosGanados = 0,
-                imagenUrl = ""
+                anioFundacion = _uiState.value.foundedYear.toIntOrNull() ?: 0,
+                titulosGanados = _uiState.value.titulosGanados.toIntOrNull() ?: 0,
+                imagenUrl = _uiState.value.imagenUrl
             )
 
             // Call repository to register team
@@ -102,19 +105,15 @@ class RegisterViewModel(
                 return false
             }
             state.foundedYear.toIntOrNull() == null -> {
-                _uiState.update { it.copy(errorMessage = "El año debe ser un número válido") }
+                _uiState.update { it.copy(errorMessage = "El año de fundación debe ser un número válido") }
                 return false
             }
-            state.foundedYear.toInt() < 1800 || state.foundedYear.toInt() > 2025 -> {
-                _uiState.update { it.copy(errorMessage = "El año debe estar entre 1800 y 2025") }
+            state.titulosGanados.isBlank() -> {
+                _uiState.update { it.copy(errorMessage = "Los títulos ganados son requeridos") }
                 return false
             }
-            state.country.isBlank() -> {
-                _uiState.update { it.copy(errorMessage = "El país es requerido") }
-                return false
-            }
-            state.stadium.isBlank() -> {
-                _uiState.update { it.copy(errorMessage = "El estadio es requerido") }
+            state.titulosGanados.toIntOrNull() == null -> {
+                _uiState.update { it.copy(errorMessage = "Los títulos ganados deben ser un número válido") }
                 return false
             }
         }

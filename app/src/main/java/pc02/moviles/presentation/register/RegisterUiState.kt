@@ -6,10 +6,9 @@ package pc02.moviles.presentation.register
 data class RegisterUiState(
     val teamName: String = "",
     val foundedYear: String = "",
-    val country: String = "",
-    val stadium: String = "",
+    val titulosGanados: String = "",
+    val imagenUrl: String = "",
     val isLoading: Boolean = false,
     val errorMessage: String? = null,
     val registerSuccess: Boolean = false
 )
-

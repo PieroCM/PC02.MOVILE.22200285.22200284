@@ -84,8 +84,8 @@ fun RegisterScreen(
                 uiState = uiState,
                 onTeamNameChange = viewModel::onTeamNameChange,
                 onFoundedYearChange = viewModel::onFoundedYearChange,
-                onCountryChange = viewModel::onCountryChange,
-                onStadiumChange = viewModel::onStadiumChange,
+                onTitulosGanadosChange = viewModel::onTitulosGanadosChange,
+                onImagenUrlChange = viewModel::onImagenUrlChange,
                 onRegisterClick = viewModel::onRegisterClick,
                 onLoginClick = onLoginClick
             )
@@ -98,8 +98,8 @@ private fun RegisterContent(
     uiState: RegisterUiState,
     onTeamNameChange: (String) -> Unit,
     onFoundedYearChange: (String) -> Unit,
-    onCountryChange: (String) -> Unit,
-    onStadiumChange: (String) -> Unit,
+    onTitulosGanadosChange: (String) -> Unit,
+    onImagenUrlChange: (String) -> Unit,
     onRegisterClick: () -> Unit,
     onLoginClick: () -> Unit
 ) {
@@ -175,21 +175,22 @@ private fun RegisterContent(
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Country Field
+        // Títulos Ganados Field
         TransparentTextField(
-            value = uiState.country,
-            onValueChange = onCountryChange,
-            placeholder = "Country",
+            value = uiState.titulosGanados,
+            onValueChange = onTitulosGanadosChange,
+            placeholder = "Títulos Ganados",
+            keyboardType = KeyboardType.Number,
             enabled = !uiState.isLoading
         )
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        // Stadium Field
+        // Image URL Field
         TransparentTextField(
-            value = uiState.stadium,
-            onValueChange = onStadiumChange,
-            placeholder = "Stadium",
+            value = uiState.imagenUrl,
+            onValueChange = onImagenUrlChange,
+            placeholder = "Image URL (optional)",
             enabled = !uiState.isLoading
         )
 
