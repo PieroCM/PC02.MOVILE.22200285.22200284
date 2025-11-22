@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import pc02.moviles.presentation.register.RegisterScreen
+import pc02.moviles.presentation.navigation.AppNavigation
 import pc02.moviles.ui.theme.PC02MovilesTheme
 
 class MainActivity : ComponentActivity() {
@@ -17,10 +17,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             PC02MovilesTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
-                    RegisterScreen(
-                        onLoginClick = { /* TODO: Navigate to Login */ },
-                        onRegisterSuccess = { /* TODO: Navigate to next screen */ }
-                    )
+                    AppNavigation()
                 }
             }
         }

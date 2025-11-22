@@ -14,11 +14,10 @@ data class Equipo(
             return Equipo(
                 id = snapshot.id,
                 nombreEquipo = snapshot.getString("nombreEquipo") ?: "",
-                anioFundacion = snapshot.getLong("anioFundacion")?.toInt() ?: 0,
-                titulosGanados = snapshot.getLong("titulosGanados")?.toInt() ?: 0,
-                imagenUrl = snapshot.getString("imagenUrl") ?: ""
+                anioFundacion = snapshot.getLong("anioFund")?.toInt() ?: 0,
+                titulosGanados = snapshot.getString("Ntitulos")?.toIntOrNull() ?: 0,
+                imagenUrl = snapshot.getString("Urlimagen") ?: ""
             )
         }
     }
 }
-

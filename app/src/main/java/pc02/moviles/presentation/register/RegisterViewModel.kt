@@ -7,12 +7,16 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import pc02.moviles.data.model.Equipo
+import pc02.moviles.data.repository.EquipoRepository
 
 /**
  * ViewModel for Register Screen
- * Prepared for future Firebase integration
+ * Complete Firebase integration with Firestore
  */
-class RegisterViewModel : ViewModel() {
+class RegisterViewModel(
+    private val repository: EquipoRepository = EquipoRepository()
+) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegisterUiState())
     val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
@@ -38,14 +42,7 @@ class RegisterViewModel : ViewModel() {
 
     /**
      * Register button click handler
-     * TODO: Implement Firebase Firestore logic
-     *
-     * Future implementation:
-     * 1. Validate input fields
-     * 2. Create Team object
-     * 3. Call repository.registerTeam()
-     * 4. Handle success/error states
-     * 5. Navigate to next screen on success
+     * Validates input and registers team to Firestore
      */
     fun onRegisterClick() {
         viewModelScope.launch {
@@ -56,65 +53,80 @@ class RegisterViewModel : ViewModel() {
 
             _uiState.update { it.copy(isLoading = true, errorMessage = null) }
 
-            // TODO: Implement Firebase registration
-            // val team = Team(
-            //     name = _uiState.value.teamName,
-            //     foundedYear = _uiState.value.foundedYear.toIntOrNull() ?: 0,
-            //     country = _uiState.value.country,
-            //     stadium = _uiState.value.stadium
-            // )
-            //
-            // repository.registerTeam(team)
-            //     .onSuccess { /* Navigate to next screen */ }
-            //     .onFailure { error ->
-            //         _uiState.update { it.copy(
-            //             isLoading = false,
-            //             errorMessage = error.message
-            //         )}
-            //     }
+            // Create Equipo object
+            val equipo = Equipo(
+                id = "", // Firestore will generate the ID
+                nombreEquipo = _uiState.value.teamName,
+                anioFundacion = _uiState.value.foundedYear.toInt(),
+                titulosGanados = 0,
+                imagenUrl = ""
+            )
 
-            _uiState.update { it.copy(isLoading = false) }
+            // Call repository to register team
+            repository.registrarEquipo(equipo)
+                .onSuccess {
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            registerSuccess = true,
+                            errorMessage = null
+                        )
+                    }
+                }
+                .onFailure { error ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            registerSuccess = false,
+                            errorMessage = error.message ?: "Error al registrar el equipo"
+                        )
+                    }
+                }
         }
     }
 
+    /**
+     * Validates all input fields
+     * Returns true if all fields are valid
+     */
     private fun validateFields(): Boolean {
         val state = _uiState.value
 
         when {
             state.teamName.isBlank() -> {
-                _uiState.update { it.copy(errorMessage = "Team name is required") }
+                _uiState.update { it.copy(errorMessage = "El nombre del equipo es requerido") }
                 return false
             }
             state.foundedYear.isBlank() -> {
-                _uiState.update { it.copy(errorMessage = "Founded year is required") }
+                _uiState.update { it.copy(errorMessage = "El año de fundación es requerido") }
                 return false
             }
             state.foundedYear.toIntOrNull() == null -> {
-                _uiState.update { it.copy(errorMessage = "Invalid year") }
+                _uiState.update { it.copy(errorMessage = "El año debe ser un número válido") }
+                return false
+            }
+            state.foundedYear.toInt() < 1800 || state.foundedYear.toInt() > 2025 -> {
+                _uiState.update { it.copy(errorMessage = "El año debe estar entre 1800 y 2025") }
                 return false
             }
             state.country.isBlank() -> {
-                _uiState.update { it.copy(errorMessage = "Country is required") }
+                _uiState.update { it.copy(errorMessage = "El país es requerido") }
                 return false
             }
             state.stadium.isBlank() -> {
-                _uiState.update { it.copy(errorMessage = "Stadium is required") }
+                _uiState.update { it.copy(errorMessage = "El estadio es requerido") }
                 return false
             }
         }
 
         return true
     }
-}
 
-/**
- * UI State for Register Screen
- */
-data class RegisterUiState(
-    val teamName: String = "",
-    val foundedYear: String = "",
-    val country: String = "",
-    val stadium: String = "",
-    val isLoading: Boolean = false,
-    val errorMessage: String? = null
-)
+    /**
+     * Reset register success state
+     * Call this after navigation to reset the flag
+     */
+    fun resetRegisterSuccess() {
+        _uiState.update { it.copy(registerSuccess = false) }
+    }
+}

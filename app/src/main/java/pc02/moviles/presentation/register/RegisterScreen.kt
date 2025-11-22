@@ -28,7 +28,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 /**
  * Register Screen - Clover iOS UI Kit inspired design
  * Clean Architecture - UI Layer
- * Prepared for future Firebase integration
+ * Complete Firebase integration
  */
 @Composable
 fun RegisterScreen(
@@ -41,6 +41,14 @@ fun RegisterScreen(
 
     LaunchedEffect(Unit) {
         visible = true
+    }
+
+    // Observe register success and navigate
+    LaunchedEffect(uiState.registerSuccess) {
+        if (uiState.registerSuccess) {
+            onRegisterSuccess()
+            viewModel.resetRegisterSuccess()
+        }
     }
 
     Box(
@@ -311,4 +319,3 @@ fun TransparentTextField(
         enabled = enabled
     )
 }
-
