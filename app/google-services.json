@@ -1,49 +1,39 @@
 {
   "project_info": {
-    "project_number": "819033760729",
-    "project_id": "piero-firebase-2025",
-    "storage_bucket": "piero-firebase-2025.firebasestorage.app"
+    "project_number": "630408440654",
+    "project_id": "pc2moviles-63812",
+    "storage_bucket": "pc2moviles-63812.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:819033760729:android:3b44b6d8b94c51ef996fc8",
-        "android_client_info": {
-          "package_name": "dev.lchang.appue"
-        }
-      },
-      "oauth_client": [],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCnwuQBy9xh7Ey47Towh8MmyZ7U0xSXiPw"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": []
-        }
-      }
-    },
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:819033760729:android:2eef1d4e162343cd996fc8",
+        "mobilesdk_app_id": "1:630408440654:android:b81de9e3d5d29102fd8c1f",
         "android_client_info": {
           "package_name": "pc02.moviles"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "630408440654-b92il3ute5jn0gvmedgfu3b258fbgd7d.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
-          "current_key": "AIzaSyCnwuQBy9xh7Ey47Towh8MmyZ7U0xSXiPw"
+          "current_key": "AIzaSyAgCkzCS71uH_snQkHQmx5EzMXwgICcJkU"
         }
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630408440654-b92il3ute5jn0gvmedgfu3b258fbgd7d.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
   ],
   "configuration_version": "1"
 }
-
