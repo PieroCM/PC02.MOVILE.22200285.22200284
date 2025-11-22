@@ -5,12 +5,9 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import pc02.moviles.presentation.futboll.ListadoScreen
 import pc02.moviles.ui.theme.PC02MovilesTheme
 
 class MainActivity : ComponentActivity() {
@@ -20,28 +17,14 @@ class MainActivity : ComponentActivity() {
         setContent {
             PC02MovilesTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
+                    ListadoScreen(
+                        onNuevoRegistroClick = {
+                            // TODO: Navegar a la pantalla de registro
+                            // Por ahora solo un placeholder
+                        }
                     )
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    PC02MovilesTheme {
-        Greeting("Android")
     }
 }

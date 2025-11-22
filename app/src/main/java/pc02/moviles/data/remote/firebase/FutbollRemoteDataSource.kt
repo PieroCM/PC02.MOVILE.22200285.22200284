@@ -24,9 +24,9 @@ object FutbollRemoteDataSource {
         return try {
             val data = mapOf(
                 "nombreEquipo" to equipo.nombreEquipo,
-                "anioFundacion" to equipo.anioFundacion,
-                "titulosGanados" to equipo.titulosGanados,
-                "imagenUrl" to equipo.imagenUrl
+                "anioFund" to equipo.anioFundacion,
+                "Ntitulos" to equipo.titulosGanados.toString(),
+                "Urlimagen" to equipo.imagenUrl
             )
 
             if (equipo.id.isEmpty()) {
@@ -49,9 +49,9 @@ object FutbollRemoteDataSource {
 
             val updates = mapOf(
                 "nombreEquipo" to equipo.nombreEquipo,
-                "anioFundacion" to equipo.anioFundacion,
-                "titulosGanados" to equipo.titulosGanados,
-                "imagenUrl" to equipo.imagenUrl
+                "anioFund" to equipo.anioFundacion,
+                "Ntitulos" to equipo.titulosGanados.toString(),
+                "Urlimagen" to equipo.imagenUrl
             )
 
             firestore.collection("futboll")
@@ -78,4 +78,3 @@ object FutbollRemoteDataSource {
         }
     }
 }
-
